@@ -1,156 +1,82 @@
 <div ng-controller="viewCtrl as vm" >
-<!-- <div ng-init="vm.currentCheck()"></div> -->
-<md-sidenav class="md-sidenav-left" md-component-id="left">
+	<md-sidenav class="md-sidenav-left" md-component-id="left">
 		<md-toolbar>
 			<h1>Options</h1>
 		</md-toolbar>
 		<md-content layout-padding>
-		<p>Choose your Destiny!</p>
-		<table class="table">
-			<tr ng-repeat = "obj in vm.objs.linklist"  ng-if="obj.idType == '0' " role="presentation" ng-click="vm.actionCheck(obj); vm.closeSidebar() " >
-			<!-- && obj.linkVerb !='GET' -->
-	    		<td><a href="" >{{obj.linkRel}}</a></td>
-	    	</tr>
-	    </table>
-		<md-button class="md-primary" ng-click=" vm.closeSidebar()">Cancel</md-button>
+			<p>Choose your Destiny!</p>
+			<table class="table">
+				<tr ng-repeat = "obj in vm.objs.linklist"  ng-if="obj.idType == '0' " role="presentation" ng-click="vm.actionCheck(obj); vm.closeSidebar() " >
+				<!-- && obj.linkVerb !='GET' -->
+					<td><a href="" >{{obj.linkRel}}</a></td>
+				</tr>
+			</table>
+			<md-button class="md-primary" ng-click=" vm.closeSidebar()">Cancel</md-button>
 		</md-content>
 	</md-sidenav>
-	
-<div class='row'>
-  <div class='col-lg-10'>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{vm.currentObject.linkRel}}</h3>
-		</div>
-      <div class="panel-body">
-    
-        <div class='row'> 
 
-        <div ng-if="embededUri">
-          <div class='col-lg-4' ng-switch="vm.embededType" >
-            <img  ng-src="{{embededUri}}" width = '200px' ng-switch-when="image">
-            <!-- <video width="400" controls>
-			  <source src="https://www.youtube.com/embed/pBUi-ZYN4QM" type="video/mp4">
-	  		</video> -->
-			<iframe ng-switch-when="video" width="280" height="157" src={{embededUri}} frameborder="0" allowfullscreen ></iframe>
-
-			<iframe ng-switch-when="map" width="300" height="225" frameborder="0" style="border:0"
-			ng-src="{{embededUri}}" allowfullscreen></iframe>
-
-			<!-- <iframe ng-switch-when="code" width="300" height="225" ng-src="{{embededUri}}" frameborder="0"></iframe> -->
-			<pre ng-switch-when="code"  style="width: 300px; height: 40pc; overflow-y: scroll;" >{{embededUri}}</pre>
-			<!-- <p ng-switch-when="json">{{embededUri | json}}</p> -->
-			
-         <!-- <pre ><iframe ng-switch-when="code" src="controllers/editCtrl.js" frameborder="0" height="400"></iframe></pre> -->
-          </div>
-          </div>
-
-          <div class='col-lg-6'>
-           
-<!-- <h1>{{vm.currentObject.linkRel}}</h1>
-<img src="{{vm.imageUrl}}" ng-if="vm.imageUrl">
-	<div class="col-sm-8" > -->
-		<table  class="table">
-			<thead >
-				<tr> 
-					<th> Property </th>
-					<th> Value </th>
-				</tr> 
-			</thead>
-			<tr ng-repeat="(key,atr) in vm.objs " ng-if="key != 'linklist' ">
-				<td >{{key}}</td>
-				<td >{{atr}}</td>
-				<!-- <input  class=" form-control" type="{{vm.formType[key]}}"  ng-model="vm.formObj[key]" ng-value="atr"> 
-				</div> -->
-			</tr>
-		<!-- <button ng-if="vm.actionbutton" ng-click="vm.request()" class="btn btn-default">{{vm.actionbutton}}</button> -->
-		</table>
-
-		<!-- <div class="col-sm-8">	 -->
-	<!-- 	<h4 ng-if="hasChildren ">{{vm.name | uppercase}}s</h4>
-		<ul>
-			<li ng-repeat = "child in vm.children2" ng-if="hasChildren ">
-				<a href="" ng-click="vm.actionCheck(child)">{{child.linkRel}}</a>
-			</li>
-		</ul> -->
-
-		<div ng-repeat="category in vm.childCategories">
-		<table class="table">
-			<thead><th>{{category}}</th></thead>
-			<tr ng-repeat="child in vm.children2 | filter : searchTerm">
-				<td ng-if="child.category === category"><a href="" ng-click="vm.actionCheck(child)">{{child.linkRel}}</a></td>
-			</tr>
-		</table>
-		</div>
-	<!-- </div> -->
-	</div>
-
-	
-<!-- 			<thead>
-				<th ng-repeat="(key,atr) in vm.children">{{atr.name}}</td>
-			</thead> -->
-			<!-- <tr ng-repeat="content in {{atr.contents}}">
-				<td>{{content}}</td>
-			</tr> -->
-				<!-- <td>{{atr}}</td> -->
-				<!-- <input  class=" form-control" type="{{vm.formType[key]}}"  ng-model="vm.formObj[key]" ng-value="atr"> 
-				</div> -->
-			<!-- </tr> -->
-
-	<div class="col-sm-8">	
-	
-
-  <!-- <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">More
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu"> -->
-    	<!-- <li ng-repeat = "obj in vm.objs.linklist"  ng-if="obj.idType == '0'  && obj.linkVerb !='GET' " role="presentation" ng-click="vm.setCurrentObj(obj)" ><a href="#/">{{obj.linkRel}}</a></li> -->
-    	<!-- <li ng-repeat = "obj in vm.objs.linklist"  ng-if="obj.idType == '0' && obj.linkVerb !='GET'" role="presentation" ng-click="vm.setCurrentObj(obj)" >
-    		<a href="#/" ng-if="obj.linkVerb != 'PUT'">{{obj.linkRel}}</a>
-    		<a href="#edit" ng-if="obj.linkVerb == 'PUT' || obj.linkVerb == 'POST' ">{{obj.linkRel}}</a>
-    	</li>
-    </ul>
-  </div> -->
-  <!-- <a href="#/"> -->
-
-
- <!--  <button 
-  class="btn" ng-repeat = "obj in vm.objs.linklist "  ng-if="obj.idType == '0' && obj.linkType == 'Parent' && obj.linkVerb =='GET'" ng-click=" vm.urlCheck(obj)" >
- Return</button> -->
-
- <button class="btn" 
-  ng-click="vm.return()" >
- Return</button>
- <!-- </a> -->
-	<!-- <button class="btn" ng-click="vm.goBack()">Return</button> -->
-
-		<!-- <li ng-repeat = "obj in vm.objs.linklist"  ng-if="obj.idType == '0' ">
-			<a href="#/"><ul ng-click="vm.setCurrentObj(obj)" >{{obj.linkRel}}</ul></a>
-		</li> -->
-	</div>
-
-	
-
-
-<!-- <div class="col-sm-4"  >
-			
-			<div class="container">
-			
-			<ng-form  class="form">
-				<div ng-repeat="(key,atr) in vm.formObj" class="form-group"> 
-				<label class="">{{key}}</label>
-				<input  class=" form-control" type="{{vm.formType[key]}}"  ng-model="vm.formObj[key]" ng-value="atr"> 
+	<div class='row'>
+		<div class='col-lg-10'>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{vm.currentObject.linkRel}}</h3>
 				</div>
-			<button ng-if="vm.actionbutton"  ng-click="vm.request()" class="btn btn-default">{{vm.actionbutton}}</button>
-			</ng-form>
+				<div class="panel-body">
+
+					<div class='row'> 
+
+						<div ng-if="embededUri">
+							<div class='col-lg-4' ng-switch="vm.embededType" >
+								
+								<img  ng-src="{{embededUri}}" width = '200px' ng-switch-when="image">
+
+								<iframe ng-switch-when="video" width="280" height="157" src={{embededUri}} frameborder="0" allowfullscreen ></iframe>
+
+								<iframe ng-switch-when="map" width="300" height="225" frameborder="0" style="border:0"
+								ng-src="{{embededUri}}" allowfullscreen></iframe>
+
+								<pre ng-switch-when="code"  style="width: 300px; height: 40pc; overflow-y: scroll;" >{{embededUri}}</pre>
+
+							</div>
+						</div>
+
+						<div class='col-lg-6'>
+
+							<table  class="table">
+								<thead >
+									<tr> 
+										<th> Property </th>
+										<th> Value </th>
+									</tr> 
+								</thead>
+								<tbody>
+									<tr ng-repeat="(key,atr) in vm.objs " ng-if="key != 'linklist' ">
+										<td >{{key}}</td>
+										<td >{{atr}}</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div ng-repeat="category in vm.childCategories">
+								<table class="table">
+									<thead>
+										<th>{{category}}</th>
+									</thead>
+									<tr ng-repeat="child in vm.children2 | filter : searchTerm">
+										<td ng-if="child.category === category"><a href="" ng-click="vm.actionCheck(child)">{{child.linkRel}}</a></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<div class="col-sm-8">	
+							<button class="btn" ng-click="vm.return()" >
+								Return
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			
-
-
-	</div> -->
-</div>
-</div>
-</div>
-</div>
-</div>
+		</div>
+	</div>
 </div>

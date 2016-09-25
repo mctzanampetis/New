@@ -12,10 +12,7 @@
 		.when('/edit', {
 			templateUrl:'templates/edit.html'})
 		.when('/signin', {
-			templateUrl:'templates/signin.html'
-			// controller: 'SignInCtrl',
-			// controllerAlias: 'vm'
-		})
+			templateUrl:'templates/signin.html'})
 		.otherwise({redirectTo:'/'});
 	})
 
