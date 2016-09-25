@@ -138,11 +138,11 @@
     Unique: true
     NamingProperty: false
   - Name: postalcode
-    Type: number
+    Type: String
     Unique: true
     NamingProperty: false
   - Name: telephone
-    Type: number
+    Type: String
     Required: true
     Unique: true
     NamingProperty: false
@@ -151,7 +151,7 @@
     Unique: true
     NamingProperty: false
   - Name: alertemailnet
-    Type: textarea
+    Type: String
     Unique: true
     NamingProperty: false
   - Name: city

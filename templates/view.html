@@ -19,7 +19,7 @@
 		<div class='col-lg-10'>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{{vm.currentObject.linkRel}}</h3>
+					<h3 class="panel-title">{{currentObject.linkRel}}</h3>
 				</div>
 				<div class="panel-body">
 
@@ -30,7 +30,7 @@
 								
 								<img  ng-src="{{embededUri}}" width = '200px' ng-switch-when="image">
 
-								<iframe ng-switch-when="video" width="280" height="157" src={{embededUri}} frameborder="0" allowfullscreen ></iframe>
+								<iframe ng-switch-when="video" width="280" height="157" ng-src={{embededUri}} frameborder="0" allowfullscreen ></iframe>
 
 								<iframe ng-switch-when="map" width="300" height="225" frameborder="0" style="border:0"
 								ng-src="{{embededUri}}" allowfullscreen></iframe>
