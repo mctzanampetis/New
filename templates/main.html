@@ -1,0 +1,156 @@
+<div ng-controller="mainCtrl as vm" >
+
+	<md-sidenav class="md-sidenav-left" md-component-id="left">
+		<md-toolbar>
+			<h1>Options</h1>
+		</md-toolbar>
+		<md-content layout-padding>
+		<p>Choose your Destiny!</p>
+		<table class="table">
+			
+			<tr ng-repeat="obj in vm.objs.linklist"  ng-if="obj.idType == 0">
+			<td><a href="" ng-click="vm.actionCheck(obj); vm.closeSidebar()"  >{{obj.linkRel}}</a></td>
+			</tr>
+		</table>
+		<md-button class="md-primary" ng-click=" vm.closeSidebar()">Cancel</md-button>
+		</md-content>
+	</md-sidenav>
+
+	<!-- <button ng-click="vm.openSidebar()">open</button> -->
+	<!-- <div class="container"> -->
+
+	<!-- <div class="col-md-2"> -->
+
+<!-- 		<table class="table">
+			<th>Options</th>
+			<tr ng-repeat="obj in vm.objs.linklist"  ng-if="obj.idType == 0">
+			<td><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></td> -->
+
+			<!-- <td ng-if="obj.linkType =='Sibling' && obj.linkVerb == 'GET' "><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}<span class="glyphicon glyphicon-refresh"></span></a></td>
+			<td ng-if="obj.linkType !='Sibling' &&  obj.linkVerb != 'GET' " ><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></td>
+			<td ng-if="obj.linkType =='Sibling' &&  obj.linkVerb == 'POST' || obj.linkVerb =='PUT' || obj.linkVerb =='DELETE'  " ><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></td>
+			<td ng-if="obj.linkType =='Child' || obj.linkType =='Parent' " ><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></td> -->
+			<!-- <td ><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></td> -->
+
+		<!-- 	</tr>
+		</table> -->
+
+		<!-- <select class="list">
+			<li>Options</li>
+			<li ng-repeat="obj in vm.objs.linklist"  ng-if="obj.idType == 0">
+			<div ng-if="obj.linkType =='Sibling' && obj.linkVerb == 'GET' "><a href="" ng-click="vm.setCurrentObj(obj)"  ><span class="glyphicon glyphicon-refresh"></span></a></div>
+			<div ng-if="obj.linkType !='Sibling' &&  obj.linkVerb != 'GET' " ><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></div>
+			<div ng-if="obj.linkType =='Sibling' &&  obj.linkVerb != 'POST' " ><a href="" ng-click="vm.setCurrentObj(obj)"  >{{obj.linkRel}}</a></div>
+
+			</li>
+		</ul> -->
+	<!-- </div> -->
+
+	<div class="starter-template">
+		<h2 >Welcome to {{serviceName}}</h2>
+		<p class="lead">Make yourself comfortable...</p>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-lg-12">
+			<form action="" class="form">
+				<div class="form-group col-lg-10 ">
+					<input type="text" class="form-control" ng-model="searchTerm" placeholder="Enter Search Term">
+				</div>
+					<button class="btn btn-warn" ng-click="searchTerm= '' ">
+						Clear     
+					</button>
+				
+				
+			</form>
+		</div>
+	</div>
+	<br>
+	<!-- <div class="container"> -->
+			<!-- <div class="col-sm-4">
+			
+			<div ng-repeat="obj in vm.objs.linklist"  ng-if="obj.idType == 0">
+				
+					<button class="btn" style="float: left" ng-if="obj.linkType =='Sibling' && obj.linkVerb == 'GET' "><a href="" ng-click="vm.setCurrentObj(obj)"  ><span class="glyphicon glyphicon-repeat"></span></a></button>
+					<button class="btn"  ng-if="obj.linkType =='Sibling' && obj.linkVerb == 'POST' "><a href="" ng-click="vm.setCurrentObj(obj)"  ><span class="glyphicon glyphicon-plus"></span></a></button>
+			</div>
+			</div>	 -->
+				<!-- <td><a href="" ng-click="vm.setCurrentObj(obj)" ng-if="obj.linkType =='Sibling' && obj.linkVerb == 'POST' " ><button><span class="glyphicon glyphicon-plus"></button></span></a></td>
+				</tr>
+			</table> -->
+		
+			<!-- <table class="table">
+			<th>{{vm.name}}</th>
+				<tr ng-repeat="obj in vm.objs.linklist" ng-if="obj.idType != 0">
+				<td><a href="" ng-click="vm.setCurrentObj(obj)">{{obj.linkRel}}</a></td>
+				
+				
+				</tr>
+			</table> -->
+
+			<div class="container marketing">
+<!-- ==========Previus style  =====================-->
+				<!-- <div class="row">
+					<div class="col-sm-4"  ng-repeat="obj in ob | filter : searchTerm" ng-if="obj.idType != 0" >
+						<div layout =  "row">
+								<h4>{{obj.linkRel}}</h4>
+							<p></p>
+							<a href="#view"><button class="btn"  ng-click="vm.setCurrentObj(obj)">View</button></a> -->
+							<!-- <button class="btn" ng-click="vm.setCurrentObj(obj)">More</button> -->
+						<!-- </div>
+					</div>
+				</div> -->
+<!-- =============================================== -->
+	`<div class="row">
+        <div class="col-lg-4" ng-repeat="obj in vm.objs.linklist | filter : searchTerm" ng-if="obj.idType != 0" > 
+       <!-- <div class="col-lg-4" ng-repeat="child in vm.children | filter : searchTerm"> -->
+          <img ng-if="obj.imageUrl" class="img-circle" ng-src={{obj.imageUrl}} alt="Generic placeholder image" width="140" height="140" >
+          <!-- <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140"> -->
+          <h2>{{obj.linkRel}}</h2>
+         <a class="btn btn-default" href="#view" role="button" ng-click="vm.setCurrentObj(obj)">View details &raquo;</a>
+        </div><!-- /.col-lg-4 -->
+        
+      </div>
+		<!-- </div> -->
+			<!-- <div class="col-sm-4" >
+			<div class="filters" layout="row" layout-align="center center">
+			</div>
+
+	
+	
+ -->
+				
+					<!-- <label>
+					Enter Search Term
+					</label> -->
+					<!-- <input type="text" class="form-control" ng-model="searchTerm" placeholder="Enter Search Term">
+				
+
+				<div layout="row">
+					<button 
+						class="btn btn-warn"
+						ng-click="searchTerm= '' ">
+						      Clear     
+					</button>
+				</div>
+			</div> -->
+
+
+		<!-- <div class="col-sm-4" ng-if="vm.name && obj.idType != 0" >
+			
+			<div class="container">
+			<div class="col-sm-4" >
+			<ng-form action="submit" class="" ng-if ="vm.formObj != ''">
+				<div ng-repeat="(key,atr) in vm.formObj" class="form-group"> 
+				<label class="">{{key}}</label>
+				<input  class=" form-control" type="{{vm.formType[key]}}"  ng-model="vm.formObj[key]" ng-value="atr"> 
+				</div>
+			<button ng-if="vm.actionbutton"  ng-click="vm.request()" class="btn btn-default">{{vm.actionbutton}}</button>
+			</ng-form>
+			</div>
+			</div>
+
+
+	</div> -->
+	<!-- </div> -->
+</div>

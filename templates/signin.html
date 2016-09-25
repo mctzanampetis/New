@@ -1,0 +1,30 @@
+<div ng-controller = "SignInCtrl as vm">
+<div ng-show = "!vm.signup">
+	<form class="form" ng-if="!signedIn">
+             <div class="form-group">
+               <input type="text" placeholder="Username" class="form-control" ng-model="username">
+             </div>
+             <div class="form-group">
+               <input type="password" placeholder="Password" class="form-control" ng-model="password">
+             </div>
+             <button type="submit" class="btn btn-success" ng-click="vm.signIn(username, password)">Sign in</button>
+    </form>
+    <p>Haven't <a ng-click = "vm.showSingUpForm()"
+    href="" >Signed Up</a> yet?</p>    
+
+
+</div>
+
+<div ng-show = "vm.signup">
+	<div class="col-sm-4" >
+			<ng-form action="submit" class="" >
+				<div ng-repeat="(key,atr) in vm.formObj" class="form-group"> 
+				<label class="">{{key}}</label>
+				<input  class=" form-control" type="{{vm.formType[key]}}"  ng-model="vm.formObj[key]" ng-value="atr"> 
+				</div>
+			<button ng-click="vm.signUp()" class="btn btn-success">Sign Up</button>
+			<button ng-click="vm.signup = false" class="btn btn-default">Cancel</button>
+			</ng-form>
+			</div>
+</div>
+</div>

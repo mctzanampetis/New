@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html >
+<head>
+	
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script> -->
+	<script src="lib/angular-1.5.0/angular.js"></script>
+	<script src="lib/angular-1.5.0/angular-animate.js"></script>
+	<script src="lib/angular-1.5.0/angular-route.min.js"></script>
+  <script src="lib/angular-1.5.0/angular-aria.js"></script>
+	<script src="lib/angular-1.5.0/angular-sanitize.js"></script>
+	<script src="lib/angular-material/angular-material.min.js"></script>
+	<script src="lib/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+	<script src="lib/jquery.min.js"></script>
+	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="lib/angular-material/angular-material.css">
+	<link rel="stylesheet" href="cstarter-template.css">
+	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+	<link rel="stylesheet" href="lib/angular-ui-notification/dist/angular-ui-notification.min.css">
+	<!-- <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.min.css"> -->
+
+  <script type="text/javascript" src="appYaml.js"></script>
+	<script type="text/javascript" src="conf.js"></script>
+  <script type="text/javascript" src="controllers/mainCtrl.js"></script>
+  <script type="text/javascript" src="controllers/signInCtrl.js"></script>
+	<script type="text/javascript" src="controllers/viewCtrl.js"></script>
+  <script type="text/javascript" src="controllers/editCtrl.js"></script>
+	<script type="text/javascript" src="services/services.js"></script>
+	
+	<title ng-controller="mainCtrl as vm">test</title>
+</head>
+	<body ng-app="myApp" ng-controller="SignInCtrl as vm">
+		<!-- <nav class="navbar navbar-default "  > -->
+		<!-- ng-controller="mainCtrl" -->
+		  <!-- <div class="container-fluid" >
+		  	
+		    <ul class="nav navbar-nav" >
+		      <li role="presentation"><a href="#/"><span class="glyphicon glyphicon-home"></span> Home </a></li>
+		      <li role="presentation"><a ng-show="loggedin" href="#/main"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks </a></li>
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		      <li role="presentation" >
+		        <a ng-hide="loggedin" href="#/main"><span class="glyphicon glyphicon-log-in"></span> Log in </a>
+		      </li>
+		      <li>
+		        <a ng-click="logout()" ng-show="loggedin" href="#/main"><span class="glyphicon glyphicon-log-out"></span> Log out </a>
+		      </li>
+		      <li role="presentation" >
+		        <a ng-hide="loggedin" href="#/register">
+		        <span class="glyphicon glyphicon-user"></span>Register</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav> -->
+
+
+	<nav class="navbar navbar-default " >
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" >{{serviceName}}</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active" ng-click="vm.clearCurrent()"><a href="" >Home</a></li>
+            <li class="" ><!-- ng-click="vm.clearCurrent()" -->
+            <md-button class="md-raised" ng-click="vm.openSidebar()" ng-show="vm.ckeckLocation()">More Options</md-button ></li>
+            <!-- <li ng-if='signedIn()'><a ng-href="#/products/new">Add Product</a></li>
+              <li ng-if='signedIn()'><a ng-href="#/users/{{getUser().id}}">User settings</a></li> -->
+          </ul>
+          <ul class="nav navbar-nav navbar-right" ng-if="!signedIn">
+            <!-- <li><a href="#signin">Sign Up</a></li> -->
+            <li><a href="#signin" ng-if="!signedIn"><strong>Sign in</strong> to get full content</a> </li> 
+          </ul>
+          <ul class="nav navbar-nav navbar-right" ng-if="signedIn">
+            <li><button ng-click="vm.signOut()" type="button" class= "btn btn-danger navbar-btn">Sign Out</button></li>
+          </ul>
+          <!-- <form class="navbar-form navbar-right" ng-if="!signedIn">
+             <div class="form-group">
+               <input type="text" placeholder="Username" class="form-control" ng-model="username">
+             </div>
+             <div class="form-group">
+               <input type="password" placeholder="Password" class="form-control" ng-model="password">
+             </div> -->
+            <!--  <a href="#/"><button type="submit" class="btn btn-success" ng-click="vm.signIn(username, password)" ng-if="!signedIn">Sign in</button></a> -->
+           <!-- </form> -->
+          
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+<!-- 
+	<md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button"ng-click="vm.openSidebar()" aria-label="Settings" ng-disabled="true">
+          <md-icon md-svg-icon="img/icons/menu.svg"   ></md-icon>More Options
+        </md-button>
+
+        <a class="navbar-brand" >YO!</a>
+        <ul class="nav navbar-nav">
+            <li class="active" ng-click="vm.clearCurrent()"><a href="#/" >Home</a></li> -->
+            <!-- <li class="" ng-click="vm.clearCurrent()"><md-button class="md-raised" ng-click="vm.openSidebar()"></md-button ></li> -->
+            <!-- <li ng-if='signedIn()'><a ng-href="#/products/new">Add Product</a></li>
+              <li ng-if='signedIn()'><a ng-href="#/users/{{getUser().id}}">User settings</a></li> -->
+     <!--      </ul>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Favorite"> -->
+         <!--  <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="More">
+          <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar> -->
+
+	<div class="container">
+	<div ng-view></div>
+	</div>
+
+
+
+	</body>
+</html>

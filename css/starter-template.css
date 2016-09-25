@@ -1,0 +1,63 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.navbar {
+	margin-top: -50px;
+}
+.marketing .col-lg-4 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: normal;
+}
+.marketing .col-lg-4 p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.table {
+    table-layout:fixed;
+}
+
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+#editForm input.ng-invalid  {
+  border: 1px solid red;
+}
+
+ #editForm input.ng-valid {
+  border: 1px solid green;
+}
+/*
+input .aria-invalid {
+  border: 1px solid red;
+}
+input .aria-valid {
+  border: 1px solid green;
+}
+*/
+/*.edit-form {
+  transition:0.5s linear all;
+  background: white;
+}
+.edit-form .ng-invalid {
+  background: red;
+  color:white;
+}*/
+
+/*input.ng-invalid {
+    background-color:pink;
+}
+input.ng-valid {
+    background-color:lightgreen;
+}*/
