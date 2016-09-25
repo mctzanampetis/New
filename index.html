@@ -31,28 +31,7 @@
 	<title ng-controller="mainCtrl as vm">test</title>
 </head>
 	<body ng-app="myApp" ng-controller="SignInCtrl as vm">
-		<!-- <nav class="navbar navbar-default "  > -->
-		<!-- ng-controller="mainCtrl" -->
-		  <!-- <div class="container-fluid" >
-		  	
-		    <ul class="nav navbar-nav" >
-		      <li role="presentation"><a href="#/"><span class="glyphicon glyphicon-home"></span> Home </a></li>
-		      <li role="presentation"><a ng-show="loggedin" href="#/main"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks </a></li>
-		    </ul>
-		    <ul class="nav navbar-nav navbar-right">
-		      <li role="presentation" >
-		        <a ng-hide="loggedin" href="#/main"><span class="glyphicon glyphicon-log-in"></span> Log in </a>
-		      </li>
-		      <li>
-		        <a ng-click="logout()" ng-show="loggedin" href="#/main"><span class="glyphicon glyphicon-log-out"></span> Log out </a>
-		      </li>
-		      <li role="presentation" >
-		        <a ng-hide="loggedin" href="#/register">
-		        <span class="glyphicon glyphicon-user"></span>Register</a>
-		      </li>
-		    </ul>
-		  </div>
-		</nav> -->
+		
 
 
 	<nav class="navbar navbar-default " >
@@ -71,26 +50,13 @@
             <li class="active" ng-click="vm.clearCurrent()"><a href="" >Home</a></li>
             <li class="" ><!-- ng-click="vm.clearCurrent()" -->
             <md-button class="md-raised" ng-click="vm.openSidebar()" ng-show="vm.ckeckLocation()">More Options</md-button ></li>
-            <!-- <li ng-if='signedIn()'><a ng-href="#/products/new">Add Product</a></li>
-              <li ng-if='signedIn()'><a ng-href="#/users/{{getUser().id}}">User settings</a></li> -->
-          </ul>
+           </ul>
           <ul class="nav navbar-nav navbar-right" ng-if="!signedIn">
-            <!-- <li><a href="#signin">Sign Up</a></li> -->
             <li><a href="#signin" ng-if="!signedIn"><strong>Sign in</strong> to get full content</a> </li> 
           </ul>
           <ul class="nav navbar-nav navbar-right" ng-if="signedIn">
             <li><button ng-click="vm.signOut()" type="button" class= "btn btn-danger navbar-btn">Sign Out</button></li>
           </ul>
-          <!-- <form class="navbar-form navbar-right" ng-if="!signedIn">
-             <div class="form-group">
-               <input type="text" placeholder="Username" class="form-control" ng-model="username">
-             </div>
-             <div class="form-group">
-               <input type="password" placeholder="Password" class="form-control" ng-model="password">
-             </div> -->
-            <!--  <a href="#/"><button type="submit" class="btn btn-success" ng-click="vm.signIn(username, password)" ng-if="!signedIn">Sign in</button></a> -->
-           <!-- </form> -->
-          
         </div><!--/.nav-collapse -->
       </div>
     </nav>
