@@ -79,6 +79,7 @@
 					vm.initObject = vm.table[i];
 					x[i] = JSON.parse(vm.initObject);
 					}
+					console.log(x)
 					return x;
 				};
 

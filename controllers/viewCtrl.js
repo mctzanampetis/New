@@ -7,7 +7,6 @@ app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$locatio
 		vm.formObj = {};
 		vm.formType = {};
 		vm.table = [];
-		vm.imgUrl
 		vm.currentObject = $rootScope.currentObject;
 		vm.children=[];
 		vm.children2=[];

@@ -13,7 +13,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','$
 		vm.currentCkeck = function(){
 			if (angular.isUndefined($rootScope.currentObject.linkURI) ){
 				$location.path("/");
-				console.log ("redirected")
+				console.log ("redirected");
 			}
 			else {
 
@@ -23,7 +23,6 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','$
 
 		vm.getObj = function(){
 			
-			var credentials = btoa('test12' + ':' + '1234');
 			$http({
 				method : 'get',
 				url : $rootScope.currentObject.linkURI,
