@@ -269,11 +269,19 @@ vm.parsedTable=YamlParse.parsejson();
 						var uriEnding = uri[uri.length-1];
 						if (!isNaN(uriEnding)){
 							vm.returnUri = obj.linkURI;	
-							vm.returnObj = obj;		
+							vm.returnObj = obj;	
+							console.log(vm.returnUri)
+							// break;
+							return;
 						}
 						else if (obj.linkURI == config.apiUrl){
 							vm.returnUri = obj.linkURI;	
 							vm.returnObj = obj;	
+						}
+						else if (isNaN(uriEnding)){
+							vm.returnUri = $rootScope.previusObj.linkURI;	
+							vm.returnObj = $rootScope.previusObj;	
+							// console.log(returnUri)
 						}
 					}
 					
