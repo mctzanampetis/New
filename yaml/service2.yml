@@ -95,7 +95,7 @@
   RelatedResources: [site]
 
 - !!eu.fp7.scase.inputParser.YamlResource
-  Name: unitsf
+  Name: units
   IsAlgorithmic: false
   IsExternalService: false
   CRUDActivities: [Read, Create]

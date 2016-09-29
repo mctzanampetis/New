@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "generic Gui",
+  "main": "myApp",
+  // "scripts": {
+  //   "test": "echo \"Error: no test specified\" && exit 1"
+  // },
+  // "repository": {
+  //   "type": "git",
+  //   "url": "git+https://github.com/sotirisAng/New.git"
+  // },
+  // "author": "sotiris Ang",
+  // "license": "ISC",
+  // "bugs": {
+  //   "url": "https://github.com/sotirisAng/New/issues"
+  // },
+  // "homepage": "https://github.com/sotirisAng/New#readme",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-ngdocs": "^0.2.10"
+  }
+}

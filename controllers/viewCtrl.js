@@ -1,5 +1,13 @@
-app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$location','$sce','$route','SignIn', 'YamlParse', 'CurrentOb','$mdDialog' , '$mdSidenav','Notification',
- function(config, $http,$scope,$rootScope,$q,$location,$sce,$route, SignIn, YamlParse, CurrentOb, $mdDialog, $mdSidenav, Notification){
+/**
+* @ngdoc controller
+* @name myApp.controller:viewCtrl
+* @description
+*
+* This is the controller responsible for visualising the properties of the current resource. 
+* 
+**/
+app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$location','$sce','$route','SignIn', 'YamlParse','$mdDialog' , '$mdSidenav','Notification',
+ function(config, $http,$scope,$rootScope,$q,$location,$sce,$route, SignIn, YamlParse, $mdDialog, $mdSidenav, Notification){
 
 
 		var vm = this;
@@ -16,6 +24,18 @@ app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$locatio
 		vm.embeded = false;
 		vm.embededProperty ='';
 
+		/**
+		* @ngdoc method
+		* @name currentCheck
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called first when the controller is been referenced to check if 
+		* there is an object to be shown. If the object is defined it calls getObj() 
+		* else it redirects to main page.
+		* 
+		**/
+
 		vm.currentCkeck = function(){
 			if (angular.isUndefined($rootScope.currentObject.linkURI)){
 				$location.path("/");
@@ -26,6 +46,18 @@ app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$locatio
 		};
 
 		
+		/**
+		* @ngdoc method
+		* @name getObj
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from  currentCkeck() and setCurrentObj(). It sends an HTTP GET request
+		* to retrieve data of the current resource, which is going to be shown. 
+		* Then it stores the response data to the variable objs and calls the functions find(), findReturnUri()
+		* getChildrenList() and setEmbededObj(). If there is an error it is logs and redirect to main page.
+		*
+		**/
 
 		vm.getObj = function(){
 			$http({
@@ -39,7 +71,7 @@ app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$locatio
 				vm.embededCheck();
 				vm.findReturnUri();
 				vm.getChildrenList();
-				vm.setViewObj();
+				vm.setEmbededObj();
 			}).catch(function(error){
 				console.log(error);
 				$location.path("/");
@@ -47,22 +79,32 @@ app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$locatio
 		
 		};
 
-		vm.request = function(){
-			$http({
-				method : $rootScope.currentObject.linkVerb,
-				url : $rootScope.currentObject.linkURI,
-				headers : SignIn.headers,
-				data: vm.formObj
-			})
-			.then(function(response){
-				vm.objs = response.data;
-				vm.find($rootScope.currentObject.linkURI);
-				vm.setCurrentObj($rootScope.previusObj);
-				$location.path("/view");
-			});
-		};
+		// vm.request = function(){
+		// 	$http({
+		// 		method : $rootScope.currentObject.linkVerb,
+		// 		url : $rootScope.currentObject.linkURI,
+		// 		headers : SignIn.headers,
+		// 		data: vm.formObj
+		// 	})
+		// 	.then(function(response){
+		// 		vm.objs = response.data;
+		// 		vm.find($rootScope.currentObject.linkURI);
+		// 		vm.setCurrentObj($rootScope.previusObj);
+		// 		$location.path("/view");
+		// 	});
+		// };
 
-			vm.delete = function(){
+		/**
+		* @ngdoc method
+		* @name delete
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the deleteWarn() function after the user agrees to delete the selected resource. 
+		* It sends an HTTP Delete request for the resource and redirect to the view of the previous resource.
+		**/  
+
+		vm.delete = function(){
 			$http({
 				method : 'delete',
 				url : $rootScope.currentObject.linkURI,
@@ -84,7 +126,24 @@ app.controller('viewCtrl',['config','$http','$scope','$rootScope','$q','$locatio
 		};
 
 		
-vm.parsedTable=YamlParse.parsejson();
+		// vm.parsedTable=YamlParse.parsejson();
+		vm.parsedTable=YamlParse.parsedTable;
+
+
+		/**
+		* @ngdoc method
+		* @name embededCheck
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the getObj() function. It uses the uri of the current
+		* resource and the parsedTable, which has the information from the yaml file in a json format. 
+		* S-case generates apis whose uris end with the name of the current resourse or with its id.
+		* So after comparing the uri ending whith the information f the parsedTable, it can recognize 
+		* the resourse an its properties. After it finds the resource in the parsed table, it searches the properties 
+		* of the resource for any embeded objects that as to be shown, and stores the the type and the spesific property
+		* at the corresponding variables embededType and embededProperty.
+		**/  
 		
 		vm.embededCheck = function(){
 			for (i = 0 ; i<vm.parsedTable.length; i++){
@@ -95,11 +154,25 @@ vm.parsedTable=YamlParse.parsejson();
 						vm.embeded = true;
 						vm.embededType = vm.parsedTable[i].Features.embededType;
 						vm.embededProperty = vm.parsedTable[i].Features.embededProperty;
-						console.log(vm.embededType)
+						console.log(vm.embededType);
 					}
 				}
 			}
 		};
+
+		/**
+		* @ngdoc method
+		* @name find
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from getObj(),getChildrenList() and delete() functions. It uses the uri of the current
+		* resource and the parsedTable, which has the information from the yaml file in a json format. 
+		* S-case generates apis whose uris end with the name of the current resourse or with its id.
+		* So after comparing the uri ending whith the information f the parsedTable, it can recognize 
+		* the resourse an its properties. 
+		*
+		**/
 
 		vm.find = function(linkURI){
 			for (i = 0 ; i<vm.parsedTable.length; i++){
@@ -108,44 +181,68 @@ vm.parsedTable=YamlParse.parsejson();
 				if (k.test(linkURI) || linkURI.endsWith(y) ){
 					$rootScope.previousState = linkURI.split(k)[0];
 					vm.name = y;
-					vm.formObj = {};
-					for(j=0; j<vm.parsedTable[i].Properties.length; j++){
-						var key = vm.parsedTable[i].Properties[j].Name;
-						var type = vm.parsedTable[i].Properties[j].Type;
-						vm.formObj[key] = "" ;
-						vm.formType[key] = type;
-					}
-					vm.passArguments ();
+					// vm.formObj = {};
+					// for(j=0; j<vm.parsedTable[i].Properties.length; j++){
+					// 	var key = vm.parsedTable[i].Properties[j].Name;
+					// 	var type = vm.parsedTable[i].Properties[j].Type;
+					// 	vm.formObj[key] = "" ;
+					// 	vm.formType[key] = type;
+					// }
+					// vm.passArguments ();
 				}
 			}
 		};
 
-		vm.passArguments = function(){
-			for (var key in vm.formObj) {
-  				if(vm.objs.hasOwnProperty(key) ) {
-			      vm.formObj[key] = vm.objs[key];
-			    }
-			  }
+		// vm.passArguments = function(){
+		// 	for (var key in vm.formObj) {
+  // 				if(vm.objs.hasOwnProperty(key) ) {
+		// 	      vm.formObj[key] = vm.objs[key];
+		// 	    }
+		// 	  }
 
 					 
-		};
+		// };
+
+		/**
+		* @ngdoc method
+		* @name setCurrentObj
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from request() and return() functions. It stores the current object 
+		* to the rootScope as previousObj so it will be able to redirect back after the submission of the form. 
+		* Then it stores the new object to the current of the rootScope. Finaly it calls the getObj() function.
+		**/
 
 		vm.setCurrentObj= function(obj){
 			var c= obj;
 			$rootScope.previusObj = $rootScope.currentObject;
 			$rootScope.currentObject = obj;
-			CurrentOb.set(c);
+			// CurrentOb.set(c);
 			vm.objUrl = $rootScope.currentObject.linkURI;
 			vm.getObj();
 
 		};
 
+		/**
+		* @ngdoc method
+		* @name getChildrenList
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from  getObj() function. The perpose of this function is to find the resource's 
+		* children and divide them to categories. First it creates tow arrays, one for the children and one for the 
+		* categories. Then it start a loop for every child of the current resource and fills the categories array
+		* and adds a new attribute for the category to the children in the array. 
+		*
+		**/
+
 		vm.getChildrenList =function(){
 			var c = 0;
 			vm.children2=[];
 			vm.childCategories = [];
-			console.log("got children")
-			console.log(vm.objs)
+			// console.log("got children")
+			// console.log(vm.objs)
 			$scope.hasChildren = false;
 			angular.forEach(vm.objs.linklist, function(link){
 				if ( link.linkType == "Child" && link.linkVerb == "GET"){
@@ -193,28 +290,33 @@ vm.parsedTable=YamlParse.parsejson();
 			});
 		};
 
-		// vm.childrenDivide = function(){
-		// 	var childCategory=[];
-		// 	angular.forEach(vm.children, function(child){
-		// 	vm.find(child.linkURI);
-		// 	childCategory.push(vm.name)
-		// 	});
-		// };
-
-
-		vm.imgtest = function(src){
-			var imgFormats = ['jpg','jpeg','gif','png','tif','bmp','ico'];
-			for (i=0;i<imgFormats.length;i++){
-				if(src.endsWith(imgFormats[i])|| src.includes(imgFormats[i])){
-					vm.imageUrl=src;
-				}
-			}
-		};
 		
 
-		vm.setViewObj = function(){
-			vm.viewObj = vm.objs;
-			angular.forEach(vm.viewObj, function(key,atr){
+
+		// vm.imgtest = function(src){
+		// 	var imgFormats = ['jpg','jpeg','gif','png','tif','bmp','ico'];
+		// 	for (i=0;i<imgFormats.length;i++){
+		// 		if(src.endsWith(imgFormats[i])|| src.includes(imgFormats[i])){
+		// 			vm.imageUrl=src;
+		// 		}
+		// 	}
+		// };
+		
+		/**
+		* @ngdoc method
+		* @name setEmbededObj
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from  getObj() function. The perpose of this function is to declare
+		* the type of the embeded object,if there is one, and add the the proper value to embededUri
+		* varaible.
+		*
+		**/
+
+		vm.setEmbededObj = function(){
+			// vm.viewObj = vm.objs;
+			angular.forEach(vm.objs, function(key,atr){
 				if (atr == vm.embededProperty){
 				switch(vm.embededType){
 					case 'image': 
@@ -224,7 +326,7 @@ vm.parsedTable=YamlParse.parsejson();
 						$scope.embededUri = $sce.trustAsResourceUrl(key);
 						break;
 					case 'code':
-						console.log(key+"-----------------")
+						
 						// $scope.embededUri = $sce.trustAsResourceUrl(key);
 						if(key){
 						$http.get(key).then(function(response){
@@ -241,9 +343,19 @@ vm.parsedTable=YamlParse.parsejson();
 		};
 		
 
-		vm.goBack = function () {
-		    window.history.back();
-		}
+		// vm.goBack = function () {
+		//     window.history.back();
+		// }
+
+		/**
+		* @ngdoc method
+		* @name return
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the user when he clicks the cancel button and wants to return back to the 
+		* view of the previous object. It sets the object to which it going to redirect as current and redirects.
+		**/
 
 		vm.return= function(){
 			if (vm.returnObj.linkURI == config.apiUrl){
@@ -260,6 +372,19 @@ vm.parsedTable=YamlParse.parsejson();
 				$location.path( "/view" );
 			}
 		};
+
+		/**
+		* @ngdoc method
+		* @name findReturnUri
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the getObj() function after the current object is defined, to find the uri 
+		* of the parent in case the user wants to return to it. if the resource uri ends with the id it passes the 
+		* uri to the returnUri variable else if ends with the resources name it passes the previousObj of the 
+		* rootScope.
+		**/
+
 
 		vm.findReturnUri=function(){
 			angular.forEach(vm.objs.linklist, function(obj){
@@ -289,17 +414,29 @@ vm.parsedTable=YamlParse.parsejson();
 			});
 		};
 
-		vm.urlCheck = function(obj){
-			if (obj.linkURI == config.apiUrl){
-				vm.setCurrentObj(obj);
-				$location.path( "/" );
-			}
-			else {
-				vm.setCurrentObj($rootScope.previusObj);
-				$location.path( "/view" );
-			}
+		// vm.urlCheck = function(obj){
+		// 	if (obj.linkURI == config.apiUrl){
+		// 		vm.setCurrentObj(obj);
+		// 		$location.path( "/" );
+		// 	}
+		// 	else {
+		// 		vm.setCurrentObj($rootScope.previusObj);
+		// 		$location.path( "/view" );
+		// 	}
 
-		};
+		// };
+
+		/**
+		* @ngdoc method
+		* @name actionCheck
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the user when he chooses one of the options on the list of the given CRUD actions.
+		* after the check for the CRUD action, it sets the chosen resource as current and selects
+		* the page to which is going to redirect to complete the request.
+		*
+		**/   
 
 		vm.actionCheck = function(obj){
 			if (obj.linkVerb == "POST") { vm.setCurrentObj(obj); $location.path("/edit"); }
@@ -323,24 +460,52 @@ vm.parsedTable=YamlParse.parsejson();
 				 	$location.path("/view");
 				}
 			}
-			vm.action = obj.linkVerb;
+			// vm.action = obj.linkVerb;
 		};
 
-		vm.deleteWarn = function(obj){
-		var confirm = $mdDialog.confirm()
-          .title('Are you sure you want to delete this ?')
-          .ok('Please do it!')
-          .cancel('Cancel');
-	    $mdDialog.show(confirm).then(function() {
-	      vm.closeSidebar();
-	       vm.delete();
-	    });
-	};
+		/**
+		* @ngdoc method
+		* @name deleteWarn
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the actionCheck() function. It shows a warning message to the user and askes if 
+		* he realy wants to delete the resource. If the user agrees it calls the delete() function to complete the action.
+		*
+		**/  
 
+		vm.deleteWarn = function(obj){
+			var confirm = $mdDialog.confirm()
+	          .title('Are you sure you want to delete this ?')
+	          .ok('Please do it!')
+	          .cancel('Cancel');
+		    $mdDialog.show(confirm).then(function() {
+		      vm.closeSidebar();
+		       vm.delete();
+		    });
+		};
+
+		/**
+		* @ngdoc method
+		* @name openSidebar
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the user when he clicks the "More Options" button and opens the sidebar 
+		**/ 
 
 		vm.openSidebar = function(){
 			$mdSidenav('left').open();
 		};
+
+		/**
+		* @ngdoc method
+		* @name closeSidebar
+		* @methodOf myApp.controller:viewCtrl
+		* @description
+		*
+		*This method is called from the user when he clicks the "Cancel" button of the sidebar and closes it. 
+		**/ 
 		vm.closeSidebar = function(){
 			$mdSidenav('left').close();
 		};

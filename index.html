@@ -19,11 +19,11 @@
 
   <script type="text/javascript" src="appYaml.js"></script>
 	<script type="text/javascript" src="conf.js"></script>
+	<script type="text/javascript" src="services/services.js"></script>
   <script type="text/javascript" src="controllers/mainCtrl.js"></script>
   <script type="text/javascript" src="controllers/signInCtrl.js"></script>
-	<script type="text/javascript" src="controllers/viewCtrl.js"></script>
+  <script type="text/javascript" src="controllers/viewCtrl.js"></script>
   <script type="text/javascript" src="controllers/editCtrl.js"></script>
-	<script type="text/javascript" src="services/services.js"></script>
 	
 	<title ng-controller="mainCtrl as vm">test</title>
 </head>
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             <li class="active" ng-click="vm.clearCurrent()"><a href="" >Home</a></li>
             <li class="" ><!-- ng-click="vm.clearCurrent()" -->
-            <md-button class="md-raised" ng-click="vm.openSidebar()" ng-show="vm.ckeckLocation()">More Options</md-button ></li>
+            <md-button class="md-raised" ng-click="vm.openSidebar()" ng-show="vm.showMoreOptions()">More Options</md-button ></li>
            </ul>
           <ul class="nav navbar-nav navbar-right" ng-if="!signedIn">
             <li><a href="#signin" ng-if="!signedIn"><strong>Sign in</strong> to get full content</a> </li> 

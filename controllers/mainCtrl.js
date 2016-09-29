@@ -1,16 +1,16 @@
 /**
 * @ngdoc controller
 * @name myApp.controller:mainCtrl
-* @descripton:
+* @description:
 *
 *This is the controller respnsible to show the list of the resourse's options for the user. 
 * It divides the the options in two lists, the first is the children of the resource and the other, 
-* which can be found if user clicks the "More Options" button, is the list of the available CRUD activities.
+* which can be found if user clicks the "More Options" button, is the list of the available CRUD actions.
 * 
 **/
 
-app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$location', 'YamlParse', 'CurrentOb', 'Notification','SignIn','$mdSidenav',
-	 function(config, $http,$q,$scope,$rootScope,$location, YamlParse, CurrentOb, Notification, SignIn,$mdSidenav){
+app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$location', 'YamlParse', 'Notification','SignIn','$mdSidenav',
+	 function(config, $http,$q,$scope,$rootScope,$location, YamlParse, Notification, SignIn,$mdSidenav){
 		
 		var vm = this;
 		
@@ -20,13 +20,14 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		// vm.formType = {};
 		vm.children= [];
 		$scope.serviceName = config.serviceName;
+		$rootScope.currentObject = {};
 
 
 		/**
 		* @ngdoc method
 		* @name currentCheck
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called first when the controller is been referenced to check if 
 		* the current object is defined. If the object is defined it calls getObj() 
@@ -36,8 +37,9 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 
 		vm.firstcall = function(){
 			
-				vm.currentObject = CurrentOb.test();
-				if( angular.isUndefined(vm.currentObject.linkURI)){
+				vm.currentObject = $rootScope.currentObject;
+				// vm.currentObject = CurrentOb.test();
+				if( angular.isUndefined($rootScope.currentObject.linkURI)){
 
 					vm.objUrl = config.apiUrl;
 
@@ -45,8 +47,8 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 					vm.getObj();
 				}
 				else {
-					vm.objUrl= vm.currentObject.linkURI;
-					console.log (vm.objUrl)
+					vm.objUrl= $rootScope.currentObject.linkURI;
+					console.log (vm.objUrl);
 					// vm.find(vm.parsedTable);
 					vm.getObj();
 				}
@@ -94,7 +96,7 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		* @ngdoc method
 		* @name getObj
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from  firstcall() and setCurrentObj(). It sends an HTTP GET request
 		* to retrieve data of the current object. Then it stores the response data to the variable 
@@ -122,7 +124,7 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		* @ngdoc method
 		* @name getChildren
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from  getObj() function. It creates a loop and sends an HTTP GET request
 		*  for every child of the resource and then stores children to the children[] array. 
@@ -158,7 +160,7 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		* @ngdoc method
 		* @name childImg
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from  getChildren() function. It creates a loop and sends an HTTP GET request
 		*  for every child in the children[] array. Then it creates another loop for the attributes of each child
@@ -193,7 +195,7 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		* @ngdoc method
 		* @name objImage
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from  childImg() function. It creates a triple loop to pass to every child 
 		* a new attribute which is the imageUrl and so it can preview the images. 
@@ -215,7 +217,7 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		* @ngdoc method
 		* @name setCurrentObj
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from the actionCheck() function. It stores the new object to the current of the rootScope.
 		* and the uri of the current to the variable objUrl which is used from the getObj function to make the 
@@ -230,15 +232,16 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 		};
 
 
-	/**
+		/**
 		* @ngdoc method
 		* @name actionCheck
 		* @methodOf myApp.controller:mainCtrl
-		* @descripton
+		* @description
 		*
-		*This method is called from the actionCheck() function. It stores the new object to the current of the rootScope.
-		* and the uri of the current to the variable objUrl which is used from the getObj function to make the 
-		* GET request. Finaly it calls the getObj() function.
+		*This method is called from the user when he chooses one of the options on the list of the given CRUD actions.
+		* after the check for the CRUD action, it sets the chosen resource as current and selects
+		* the page to which is going to redirect to complete the request.
+		*
 		**/   
 
 		vm.actionCheck = function(obj){
@@ -265,11 +268,80 @@ app.controller('mainCtrl',['config','$http','$q','$scope','$rootScope','$locatio
 			}
 		};
 
-		
+		/**
+		* @ngdoc method
+		* @name deleteWarn
+		* @methodOf myApp.controller:mainCtrl
+		* @description
+		*
+		*This method is called from the actionCheck() function. It shows a warning message to the user and askes if 
+		* he realy wants to delete the resource. If the user agrees it calls the delete() function to complete the action.
+		*
+		**/  
+
+		vm.deleteWarn = function(obj){
+			var confirm = $mdDialog.confirm()
+	          .title('Are you sure you want to delete this ?')
+	          .ok('Please do it!')
+	          .cancel('Cancel');
+		    $mdDialog.show(confirm).then(function() {
+		      vm.closeSidebar();
+		       vm.delete();
+		    });
+		};
+
+		/**
+		* @ngdoc method
+		* @name delete
+		* @methodOf myApp.controller:mainCtrl
+		* @description
+		*
+		*This method is called from the deleteWarn() function after the user agrees to delete the selected resource. 
+		* It sends an HTTP Delete request for the resource and redirect to the view of the previous resource.
+		**/  
+
+		vm.delete = function(){
+			$http({
+				method : 'delete',
+				url : $rootScope.currentObject.linkURI,
+				headers : SignIn.headers,
+				data: vm.formObj
+			})
+			.then(function(response){
+				vm.objs = response.data;
+				vm.find($rootScope.currentObject.linkURI);
+				vm.setCurrentObj($rootScope.previusObj);
+				$location.path("/view");
+			})
+			.catch(function(error){
+				console.log(error);
+				if (error.status == '403' || '401'){
+					Notification.error("Please Sign In to complete this action");
+				}
+			});
+		};
+
+		/**
+		* @ngdoc method
+		* @name openSidebar
+		* @methodOf myApp.controller:mainCtrl
+		* @description
+		*
+		*This method is called from the user when he clicks the "More Options" button and opens the sidebar 
+		**/ 
 
 		vm.openSidebar = function(){
 			$mdSidenav('left').open();
 		};
+
+		/**
+		* @ngdoc method
+		* @name closeSidebar
+		* @methodOf myApp.controller:mainCtrl
+		* @description
+		*
+		*This method is called from the user when he clicks the "Cancel" button of the sidebar and closes it. 
+		**/ 
 		vm.closeSidebar = function(){
 			$mdSidenav('left').close();
 		};

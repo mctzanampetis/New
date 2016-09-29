@@ -1,15 +1,15 @@
 /**
 * @ngdoc controller
 * @name myApp.controller:editCtrl
-* @descripton:
+* @description:
 *
 *This is the controller respnsible to create the forms and execute the requests 
 *for posting and updating data to the api's resources. 
 * 
 **/
 
-app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','SignIn', 'YamlParse', 'CurrentOb', 'Notification', 
-	function(config, $http,$scope,$rootScope,$location, SignIn, YamlParse, CurrentOb, Notification){
+app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','SignIn', 'YamlParse', 'Notification', 
+	function(config, $http,$scope,$rootScope,$location, SignIn, YamlParse, Notification){
 
 		var vm = this;
 
@@ -23,7 +23,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name currentCheck
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called first when the controller is been referenced to check if 
 		* there is an object for posting or editing. If the object is defined it calls getObj() 
@@ -46,7 +46,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name getObj
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from  currentCkeck() and setCurrentObj(). It sends an HTTP GET request
 		* to retrieve data of the current object, which is going to be edited, or the resource to whom 
@@ -71,13 +71,14 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 
 		
 		
-		vm.parsedTable=YamlParse.parsejson();
+		vm.parsedTable=YamlParse.parsedTable;
+		// vm.parsedTable=YamlParse.parsejson();
 
 		/**
 		* @ngdoc method
 		* @name find
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from getObj() and request() functions. It uses the uri of the current
 		* resource and the parsedTable, which has the information from the yaml file in a json format. 
@@ -113,7 +114,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name passArguments
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from the find() function. It creates a loop for every attribute 
 		* of the form object and checks if the current object has the same. If it does the attribute's
@@ -137,7 +138,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name setCurrentObj
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from request() and return() functions. It stores the current object 
 		* to the rootScope as previousObj so it will be able to redirect back after the submission of the form. 
@@ -147,7 +148,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		vm.setCurrentObj= function(obj){
 			$rootScope.previusObj = vm.currentObject;
 			$rootScope.currentObject = obj;
-			CurrentOb.set(obj);
+			// CurrentOb.set(obj);
 			vm.objUrl = $rootScope.currentObject.linkURI;
 			vm.getObj();
 		};
@@ -157,7 +158,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name request
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from the user when he clicks the submit button of the form at the edit.html file.
 		* It uses the current object of the rootScope to define the http method and the uri, to make the request.
@@ -198,7 +199,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name setAction
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from when the controller first runs and defines what it will be written 
 		* on the submit button of the form, based on the linkVerb of the current object.
@@ -218,7 +219,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name findReturnUri
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from the getObj() function after the current object is defined, to find the uri 
 		* of the parent in case the user wants to return to it. if the resource uri ends with the id it passes the 
@@ -255,7 +256,7 @@ app.controller('editCtrl',['config','$http','$scope','$rootScope','$location','S
 		* @ngdoc method
 		* @name return
 		* @methodOf myApp.controller:editCtrl
-		* @descripton
+		* @description
 		*
 		*This method is called from the user when he clicks the cancel button and wants to return back to the 
 		* view of the previous object. It sets the object to which it going to redirect as current and redirects.
